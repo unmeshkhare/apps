@@ -14,7 +14,7 @@
         {
           "id": "stillpoint",
           "name": "Stillpoint",
-          "description": "A calm place to explore and play with mathematics.",
+          "description": "A memory game for derivative and integral formulas.",
           "path": "stillpoint/",
           "icon": "stillpoint/icon.png",
           "new": true
