@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="en" data-theme="indigo">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Graviton Apps Editor</title>
+<style>
+@font-face{font-family:'Instrument Serif';font-style:normal;font-weight:400;font-display:swap;src:url(../fonts/instrument-serif-latin-400-normal.woff2) format('woff2')}
+@font-face{font-family:'Instrument Serif';font-style:italic;font-weight:400;font-display:swap;src:url(../fonts/instrument-serif-latin-400-italic.woff2) format('woff2')}
+@font-face{font-family:'Hanken Grotesk';font-weight:400;font-display:swap;src:url(../fonts/hanken-grotesk-latin-400-normal.woff2) format('woff2')}
+@font-face{font-family:'Hanken Grotesk';font-weight:500;font-display:swap;src:url(../fonts/hanken-grotesk-latin-500-normal.woff2) format('woff2')}
+@font-face{font-family:'Hanken Grotesk';font-weight:600;font-display:swap;src:url(../fonts/hanken-grotesk-latin-600-normal.woff2) format('woff2')}
+@font-face{font-family:'JetBrains Mono';font-weight:400;font-display:swap;src:url(../fonts/jetbrains-mono-latin-400-normal.woff2) format('woff2')}
+@font-face{font-family:'JetBrains Mono';font-weight:500;font-display:swap;src:url(../fonts/jetbrains-mono-latin-500-normal.woff2) format('woff2')}
+:root{
+  color-scheme: dark;
+  --ink-0:#0b0d26;--ink-1:#11143a;--ink-2:#1a1f50;--ink-3:#252b69;
+  --line:rgba(150,160,255,.16);--line-strong:rgba(165,175,255,.36);
+  --fg:#eceeff;--fg-muted:#a6acde;
+  --violet:#9a86ff;--violet-soft:rgba(154,134,255,.18);
+  --teal:#58e0cf;--teal-soft:rgba(88,224,207,.16);
+  --gold:#f0cb85;--good:#5ee0b0;--bad:#ff8f9c;--bad-soft:rgba(255,143,156,.14);
+  --sclera:#eef0ff;--on-accent:#0b0d26;
+  --glow1:rgba(120,100,255,.24);--glow2:rgba(60,200,210,.10);
+  --card-a:rgba(30,36,88,.55);--card-b:rgba(17,20,58,.78);
+  --font-display:'Instrument Serif','Times New Roman',serif;
+  --font-body:'Hanken Grotesk',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --font-math:'STIX Two Text','Times New Roman',serif;
+  --font-mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
+}
+:root[data-theme="aurora"]{--ink-0:#06181d;--ink-1:#0b2830;--ink-2:#123843;--ink-3:#1a4b59;--line:rgba(130,230,210,.16);--line-strong:rgba(140,235,215,.36);--violet:#6fe3b4;--violet-soft:rgba(111,227,180,.17);--teal:#74b9ff;--teal-soft:rgba(116,185,255,.16);--glow1:rgba(60,220,170,.22);--glow2:rgba(80,150,255,.12);--card-a:rgba(18,64,74,.55);--card-b:rgba(9,38,46,.78);--fg-muted:#9fd0cc}
+:root[data-theme="dusk"]{--ink-0:#1a0c24;--ink-1:#26123a;--ink-2:#351a4f;--ink-3:#48236b;--line:rgba(230,160,240,.16);--line-strong:rgba(235,170,245,.36);--violet:#e58bdc;--violet-soft:rgba(229,139,220,.17);--teal:#ffb98e;--teal-soft:rgba(255,185,142,.16);--gold:#ffd9a3;--glow1:rgba(220,110,210,.22);--glow2:rgba(255,160,120,.10);--card-a:rgba(66,32,92,.55);--card-b:rgba(38,18,58,.78);--fg-muted:#d0a9d8}
+:root[data-theme="ember"]{--ink-0:#190e0b;--ink-1:#26150f;--ink-2:#371e15;--ink-3:#4d2b1d;--line:rgba(255,190,150,.16);--line-strong:rgba(255,200,160,.34);--violet:#ff9a62;--violet-soft:rgba(255,154,98,.17);--teal:#ffd27a;--teal-soft:rgba(255,210,122,.15);--gold:#ffe3a8;--glow1:rgba(255,130,70,.20);--glow2:rgba(255,200,100,.08);--card-a:rgba(80,44,28,.55);--card-b:rgba(44,24,16,.78);--fg-muted:#d6b39f}
+:root[data-theme="forest"]{--ink-0:#07150e;--ink-1:#0d2218;--ink-2:#143323;--ink-3:#1d4631;--line:rgba(150,230,170,.15);--line-strong:rgba(160,235,180,.33);--violet:#8fd694;--violet-soft:rgba(143,214,148,.16);--teal:#5fd3c0;--teal-soft:rgba(95,211,192,.15);--glow1:rgba(80,200,120,.18);--glow2:rgba(60,200,180,.09);--card-a:rgba(24,68,44,.55);--card-b:rgba(12,38,26,.78);--fg-muted:#a3cdb0}
+:root[data-theme="graphite"]{--ink-0:#0e0f12;--ink-1:#16181c;--ink-2:#21242a;--ink-3:#2d3139;--line:rgba(200,205,220,.14);--line-strong:rgba(210,215,230,.30);--violet:#b9c0d6;--violet-soft:rgba(185,192,214,.16);--teal:#8ee0d0;--teal-soft:rgba(142,224,208,.14);--glow1:rgba(150,160,190,.14);--glow2:rgba(120,200,190,.06);--card-a:rgba(46,50,60,.6);--card-b:rgba(24,26,32,.8);--fg-muted:#aeb4c4}
+:root[data-theme="rose"]{--ink-0:#1c0c15;--ink-1:#2a1220;--ink-2:#3b1a2e;--ink-3:#52243f;--line:rgba(255,170,200,.16);--line-strong:rgba(255,180,205,.34);--violet:#ff8fb1;--violet-soft:rgba(255,143,177,.16);--teal:#ffc9a8;--teal-soft:rgba(255,201,168,.15);--gold:#ffdfb0;--glow1:rgba(255,110,160,.20);--glow2:rgba(255,190,150,.08);--card-a:rgba(86,36,62,.55);--card-b:rgba(46,18,34,.78);--fg-muted:#dbaebd}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{background-color:var(--ink-0);background-image:radial-gradient(1100px 620px at 82% -12%,var(--glow1),transparent 62%),radial-gradient(900px 520px at -6% 24%,var(--glow2),transparent 60%);background-repeat:no-repeat;background-attachment:fixed;color:var(--fg);font-family:var(--font-body);font-size:15px;line-height:1.5;margin:0;min-height:100vh;display:flex;flex-direction:column}
+a{color:inherit}
+.lbl{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-muted)}
+.wrap{width:100%;max-width:1040px;margin:0 auto;padding:0 20px}
+.foot{margin-top:auto;font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;color:var(--fg-muted);border-top:1px solid var(--line);padding:18px 20px;text-align:center}
+.pill{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line-strong);background:var(--violet-soft);color:var(--fg);border-radius:999px;padding:8px 16px;font:500 13px var(--font-body);text-decoration:none;cursor:pointer;transition:border-color .2s,background .2s}
+.pill:hover{border-color:var(--violet);background:var(--teal-soft)}
+.pill:focus-visible,.card:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.rise{animation:rise .6s ease both}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+.wrap{max-width:1200px}
+header.top{padding:34px 20px 10px}
+h1{font:400 clamp(30px,5vw,42px)/1.1 var(--font-display);margin:6px 0 6px}
+.lead{color:var(--fg-muted);margin:0;max-width:640px;font-size:14.5px}
+.bar{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--ink-0) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);margin-top:18px}
+.bar .wrap{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:12px;padding-bottom:12px}
+.bar .sp{flex:1}
+.status{font:400 11px var(--font-mono);letter-spacing:.08em;color:var(--fg-muted)}
+.status.dirty{color:var(--gold)}
+.pill.primary{background:var(--teal);color:var(--on-accent);border-color:var(--teal);font-weight:600}
+.pill.primary:hover{background:var(--teal);filter:brightness(1.1)}
+.pill.sm{padding:5px 11px;font-size:12px}
+.pill.danger:hover{border-color:var(--bad);background:var(--bad-soft)}
+.cols{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:28px;padding:22px 20px 50px;align-items:start}
+@media(max-width:900px){.cols{grid-template-columns:1fr}}
+.panel{border:1px solid var(--line);border-radius:22px;background:linear-gradient(160deg,var(--card-a),var(--card-b));padding:18px;margin-bottom:16px}
+.panel h2{font:400 22px var(--font-display);margin:0 0 12px}
+label{display:block;margin:0 0 10px}
+label .lbl{display:block;margin-bottom:5px}
+input[type=text],input[type=url],select,textarea{width:100%;background:var(--ink-1);border:1px solid var(--line);border-radius:12px;color:var(--fg);font:400 14px var(--font-body);padding:9px 12px}
+textarea{resize:vertical;min-height:58px}
+input:focus,select:focus,textarea:focus{border-color:var(--line-strong)}
+.row{display:flex;gap:10px;flex-wrap:wrap}.row>*{flex:1;min-width:140px}
+.cat-ed{border:1px solid var(--line);border-radius:18px;background:var(--ink-1);margin-bottom:14px}
+.cat-ed.over{border-color:var(--teal)}
+.cat-h{display:flex;gap:8px;align-items:center;padding:10px 12px;flex-wrap:wrap}
+.grab{cursor:grab;color:var(--fg-muted);font-size:18px;padding:0 4px;user-select:none;touch-action:none}
+.cat-h .t{font:400 20px var(--font-display);flex:1;min-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cat-b{padding:0 12px 12px;border-top:1px solid var(--line)}
+.cat-b.hid{display:none}
+.app-ed{border:1px solid var(--line);border-radius:14px;background:var(--ink-2);padding:10px;margin-top:10px}
+.app-ed.over{border-color:var(--teal)}
+.app-h{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px}
+.app-h .t{flex:1;min-width:100px;font-weight:600;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.chk{display:flex;align-items:center;gap:8px;margin:2px 0 0;font-size:13.5px;cursor:pointer}
+.chk input{accent-color:var(--teal);width:16px;height:16px}
+.ibtn{background:none;border:1px solid var(--line);color:var(--fg);border-radius:8px;width:28px;height:28px;cursor:pointer;font-size:13px;padding:0}
+.ibtn:hover{border-color:var(--line-strong)}
+.hint{color:var(--fg-muted);font-size:12.5px;margin:6px 0 0}
+.preview{position:sticky;top:72px}
+@media(max-width:900px){.preview{position:static}}
+.pv-box{border:1px solid var(--line);border-radius:22px;padding:20px;background:var(--ink-0)}
+.pv-t{text-align:center}.pv-t h3{font:400 34px var(--font-display);margin:0}.pv-t p{margin:6px 0 0;color:var(--fg-muted);font-size:14px}
+.cat{margin-top:24px;--acc:var(--violet);--acc-soft:var(--violet-soft)}
+.cat[data-accent=teal]{--acc:var(--teal);--acc-soft:var(--teal-soft)}
+.cat[data-accent=gold]{--acc:var(--gold);--acc-soft:rgba(240,203,133,.14)}
+.cat[data-accent=rose]{--acc:#ff8fb1;--acc-soft:rgba(255,143,177,.15)}
+.cat[data-accent=green]{--acc:var(--good);--acc-soft:rgba(94,224,176,.14)}
+.chead{display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--line);padding-bottom:9px}
+.chead .dot{width:8px;height:8px;border-radius:50%;background:var(--acc);box-shadow:0 0 12px var(--acc)}
+.chead .name{font:400 24px/1.1 var(--font-display);flex:1}
+.chead .count{font:400 10.5px var(--font-mono);letter-spacing:.14em;color:var(--fg-muted)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;margin-top:14px}
+.card{display:flex;gap:14px;align-items:flex-start;padding:14px;border-radius:20px;border:1px solid var(--line);background:linear-gradient(160deg,var(--card-a),var(--card-b))}
+.ico{flex:none;width:48px;height:48px;border-radius:13px;overflow:hidden;display:grid;place-items:center;border:1px solid var(--line);background:var(--ink-2)}
+.ico img{width:100%;height:100%;object-fit:cover}.ico span{font:400 24px var(--font-display);color:var(--on-accent)}
+.cname{font:600 15px/1.25 var(--font-body);margin:2px 0 3px;display:flex;gap:7px;align-items:center;flex-wrap:wrap}
+.cdesc{color:var(--fg-muted);font-size:13px;margin:0}
+.new{font:500 9px var(--font-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--on-accent);background:var(--teal);border-radius:999px;padding:2px 7px}
+.empty{color:var(--fg-muted);font-style:italic;font-size:13px;margin:12px 0 0}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink-3);border:1px solid var(--line-strong);border-radius:999px;padding:10px 20px;font-size:13.5px;opacity:0;pointer-events:none;transition:opacity .25s;z-index:9}
+.toast.on{opacity:1}
+dialog{background:var(--ink-1);color:var(--fg);border:1px solid var(--line-strong);border-radius:20px;padding:22px;max-width:460px}
+dialog::backdrop{background:rgba(5,6,20,.7)}
+dialog h3{font:400 24px var(--font-display);margin:0 0 8px}
+dialog .row{margin-top:16px;justify-content:flex-end}dialog .row>*{flex:none;min-width:0}
+ol.steps{margin:8px 0 0;padding-left:20px;color:var(--fg-muted);font-size:13.5px}ol.steps li{margin:4px 0}
+</style>
+</head>
+<body>
+<header class="top wrap">
+  <div class="lbl">Private editor</div>
+  <h1>Graviton Apps Editor</h1>
+  <p class="lead">Change the list here, check the preview, press <b>Download list</b>, then upload the downloaded <code>apps.json</code> to GitHub. Nothing is saved on any server.</p>
+</header>
+<div class="bar"><div class="wrap">
+  <button class="pill primary" id="dl" type="button">Download list</button>
+  <button class="pill" id="openFile" type="button">Open apps.json…</button>
+  <button class="pill" id="how" type="button">How to publish</button>
+  <input type="file" id="file" accept=".json,application/json" hidden>
+  <span class="sp"></span>
+  <span class="status" id="status">Loading…</span>
+</div></div>
+<div class="wrap cols">
+  <div>
+    <div class="panel">
+      <h2>Site</h2>
+      <label><span class="lbl">Site name</span><input type="text" id="sName" maxlength="60"></label>
+      <label><span class="lbl">Line below the name</span><input type="text" id="sTag" maxlength="160"></label>
+      <label><span class="lbl">YouTube link (leave empty to hide)</span><input type="url" id="sYt" placeholder="https://www.youtube.com/@…"></label>
+    </div>
+    <div class="row" style="margin:0 0 14px"><button class="pill" id="addCat" type="button">+ Add category</button></div>
+    <div id="cats"></div>
+  </div>
+  <div class="preview"><div class="lbl" style="margin:0 0 8px">Live preview</div><div class="pv-box" id="pv"></div>
+    <p class="hint">Icons show once the image files have been uploaded to GitHub. Until then a coloured letter tile appears.</p></div>
+</div>
+<footer class="foot">Made by Unmesh Khare · Graviton Multimedia</footer>
+<div class="toast" id="toast"></div>
+<dialog id="dlg"><h3>How to publish your changes</h3>
+<ol class="steps"><li>Press <b>Download list</b>. A file called <code>apps.json</code> is saved to Downloads.</li>
+<li>On GitHub open your <code>apps</code> repository → <b>Add file → Upload files</b>.</li>
+<li>Drag in <code>apps.json</code> (and any new app folders or icon images).</li>
+<li>Press <b>Commit changes</b>. The site updates in about a minute.</li></ol>
+<div class="row"><button class="pill" id="dlgClose" type="button">Close</button></div></dialog>
+<script>
+(function(){
+'use strict';
+var DRAFT='graviton.editor.draft',D=null,dirty=false,drag=null;
+var ACC=['violet','teal','gold','rose','green'];
+var $=function(i){return document.getElementById(i)};
+function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e}
+function lsGet(k){try{return localStorage.getItem(k)}catch(e){return null}}
+function lsSet(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+function toast(m){var t=$('toast');t.textContent=m;t.classList.add('on');clearTimeout(toast.h);toast.h=setTimeout(function(){t.classList.remove('on')},2400)}
+function slug(s){return (s||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'')}
+function uniq(base,taken){base=base||'item';var id=base,n=2;while(taken.indexOf(id)>-1)id=base+'-'+n++;return id}
+function allAppIds(){var a=[];D.categories.forEach(function(c){c.apps.forEach(function(x){a.push(x.id)})});return a}
+function norm(d){
+  d=d&&typeof d==='object'?d:{};var s=d.settings||{};
+  var out={settings:{name:String(s.name||'Graviton Apps'),tagline:String(s.tagline==null?'':s.tagline),youtube:String(s.youtube||'')},categories:[]};
+  (Array.isArray(d.categories)?d.categories:[]).forEach(function(c){
+    var cc={id:String(c.id||slug(c.name)||'category'),name:String(c.name||''),subtitle:String(c.subtitle||''),accent:ACC.indexOf(c.accent)>-1?c.accent:'violet',apps:[]};
+    (Array.isArray(c.apps)?c.apps:[]).forEach(function(a){cc.apps.push({id:String(a.id||slug(a.name)||'app'),name:String(a.name||''),description:String(a.description||''),path:String(a.path||''),icon:String(a.icon||''),'new':!!a['new']})});
+    out.categories.push(cc)});
+  return out}
+function mark(){dirty=true;$('status').textContent='Unsaved changes — press Download list';$('status').className='status dirty';lsSet(DRAFT,JSON.stringify(D));preview()}
+function load(d,msg){D=norm(d);dirty=false;$('sName').value=D.settings.name;$('sTag').value=D.settings.tagline;$('sYt').value=D.settings.youtube;
+  $('status').textContent=msg||'Loaded';$('status').className='status';build();preview()}
+
+/* ---------- editor ---------- */
+function field(lab,val,cb,type,area){var l=el('label');l.appendChild(el('span','lbl',lab));var i=area?el('textarea'):el('input');if(!area)i.type=type||'text';i.value=val;i.addEventListener('input',function(){cb(i.value)});l.appendChild(i);return l}
+function ibtn(txt,title,cb){var b=el('button','ibtn',txt);b.type='button';b.title=title;b.setAttribute('aria-label',title);b.addEventListener('click',cb);return b}
+function move(arr,i,j){if(j<0||j>=arr.length)return;var x=arr.splice(i,1)[0];arr.splice(j,0,x)}
+var openCats={};
+function build(){
+  var root=$('cats');root.textContent='';
+  D.categories.forEach(function(c,ci){
+    var box=el('div','cat-ed');box.draggable=false;
+    var h=el('div','cat-h');
+    var g=el('span','grab','⠿');g.title='Drag to reorder';g.draggable=true;
+    g.addEventListener('dragstart',function(e){drag={t:'cat',ci:ci};e.dataTransfer.effectAllowed='move';e.dataTransfer.setData('text/plain','c');try{e.dataTransfer.setDragImage(box,10,10)}catch(x){}});
+    g.addEventListener('dragend',function(){drag=null;clearOver()});
+    h.appendChild(g);
+    var t=el('span','t',c.name||'(unnamed category)');h.appendChild(t);
+    h.appendChild(ibtn('↑','Move up',function(){move(D.categories,ci,ci-1);mark();build()}));
+    h.appendChild(ibtn('↓','Move down',function(){move(D.categories,ci,ci+1);mark();build()}));
+    var tg=el('button','pill sm',openCats[c.id]?'Hide':'Edit');tg.type='button';
+    tg.addEventListener('click',function(){openCats[c.id]=!openCats[c.id];body.classList.toggle('hid',!openCats[c.id]);tg.textContent=openCats[c.id]?'Hide':'Edit'});
+    h.appendChild(tg);
+    var del=el('button','pill sm danger','Delete');del.type='button';
+    del.addEventListener('click',function(){if(c.apps.length&&!confirm('Delete category “'+c.name+'” and its '+c.apps.length+' app(s) from the list?'))return;D.categories.splice(ci,1);mark();build()});
+    h.appendChild(del);box.appendChild(h);
+    box.addEventListener('dragover',function(e){if(!drag)return;if(drag.t==='cat'&&drag.ci!==ci||drag.t==='app'){e.preventDefault();clearOver();box.classList.add('over')}});
+    box.addEventListener('drop',function(e){if(!drag)return;e.preventDefault();
+      if(drag.t==='cat'){var x=D.categories.splice(drag.ci,1)[0];D.categories.splice(ci,0,x)}
+      else if(drag.t==='app'&&!e.target.closest('.app-ed')){var a=D.categories[drag.ci].apps.splice(drag.ai,1)[0];c.apps.push(a)}
+      drag=null;mark();build()});
+    var body=el('div','cat-b'+(openCats[c.id]?'':' hid'));
+    var r=el('div','row');r.style.marginTop='12px';
+    r.appendChild(field('Category name',c.name,function(v){c.name=v;t.textContent=v||'(unnamed category)'; mark()}));
+    var sl=el('label');sl.appendChild(el('span','lbl','Accent colour'));var s=el('select');
+    ACC.forEach(function(a){var o=el('option',null,a);o.value=a;if(a===c.accent)o.selected=true;s.appendChild(o)});
+    s.addEventListener('change',function(){c.accent=s.value;mark()});sl.appendChild(s);r.appendChild(sl);body.appendChild(r);
+    body.appendChild(field('Short line under the name',c.subtitle,function(v){c.subtitle=v;mark()}));
+    c.apps.forEach(function(a,ai){body.appendChild(appEd(c,ci,a,ai))});
+    var add=el('button','pill sm','+ Add app');add.type='button';add.style.marginTop='12px';
+    add.addEventListener('click',function(){var n={id:uniq('new-app',allAppIds()),name:'New app',description:'',path:'',icon:'','new':false};c.apps.push(n);openCats[c.id]=true;mark();build()});
+    body.appendChild(add);box.appendChild(body);root.appendChild(box)});
+  if(!D.categories.length)root.appendChild(el('p','hint','No categories yet. Press “+ Add category”.'));
+}
+function appEd(c,ci,a,ai){
+  var b=el('div','app-ed');
+  var h=el('div','app-h');var g=el('span','grab','⠿');g.title='Drag to reorder';g.draggable=true;
+  g.addEventListener('dragstart',function(e){drag={t:'app',ci:ci,ai:ai};e.dataTransfer.effectAllowed='move';e.dataTransfer.setData('text/plain','a');e.stopPropagation();try{e.dataTransfer.setDragImage(b,10,10)}catch(x){}});
+  g.addEventListener('dragend',function(){drag=null;clearOver()});
+  h.appendChild(g);var t=el('span','t',a.name||'(unnamed app)');h.appendChild(t);
+  h.appendChild(ibtn('↑','Move up',function(){move(c.apps,ai,ai-1);mark();build()}));
+  h.appendChild(ibtn('↓','Move down',function(){move(c.apps,ai,ai+1);mark();build()}));
+  var d=el('button','pill sm danger','Delete');d.type='button';d.addEventListener('click',function(){if(!confirm('Remove “'+a.name+'” from the list? (The app’s files stay on GitHub.)'))return;c.apps.splice(ai,1);mark();build()});
+  h.appendChild(d);b.appendChild(h);
+  b.addEventListener('dragover',function(e){if(drag&&drag.t==='app'&&!(drag.ci===ci&&drag.ai===ai)){e.preventDefault();e.stopPropagation();clearOver();b.classList.add('over')}});
+  b.addEventListener('drop',function(e){if(!drag||drag.t!=='app')return;e.preventDefault();e.stopPropagation();
+    var x=D.categories[drag.ci].apps.splice(drag.ai,1)[0];var idx=c.apps.indexOf(a);c.apps.splice(idx,0,x);drag=null;mark();build()});
+  b.appendChild(field('App name',a.name,function(v){a.name=v;t.textContent=v||'(unnamed app)';mark()}));
+  b.appendChild(field('Short description',a.description,function(v){a.description=v;mark()},null,true));
+  var r=el('div','row');
+  r.appendChild(field('Folder / link (e.g. stillpoint/)',a.path,function(v){a.path=v.trim();mark()}));
+  r.appendChild(field('Icon file (e.g. stillpoint/icon.png)',a.icon,function(v){a.icon=v.trim();mark()}));
+  b.appendChild(r);
+  var l=el('label','chk');var cb=el('input');cb.type='checkbox';cb.checked=a['new'];cb.addEventListener('change',function(){a['new']=cb.checked;mark()});
+  l.appendChild(cb);l.appendChild(el('span',null,'Show a “New” badge'));b.appendChild(l);
+  return b}
+function clearOver(){[].forEach.call(document.querySelectorAll('.over'),function(n){n.classList.remove('over')})}
+
+/* ---------- preview ---------- */
+var TILE=['#9a86ff','#58e0cf','#f0cb85','#ff8fb1','#8fd694','#74b9ff','#ffb98e'];
+function tileColor(s){var h=0;for(var i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))>>>0;return TILE[h%TILE.length]}
+function preview(){
+  var p=$('pv');p.textContent='';
+  var t=el('div','pv-t');t.appendChild(el('h3',null,D.settings.name||'Graviton Apps'));if(D.settings.tagline)t.appendChild(el('p',null,D.settings.tagline));p.appendChild(t);
+  D.categories.forEach(function(c){
+    var s=el('section','cat');s.dataset.accent=c.accent;
+    var h=el('div','chead');h.appendChild(el('span','dot'));h.appendChild(el('span','name',c.name));h.appendChild(el('span','count',String(c.apps.length).padStart(2,'0')));s.appendChild(h);
+    if(c.apps.length){var g=el('div','grid');c.apps.forEach(function(a){
+      var k=el('div','card'),ic=el('div','ico');
+      var fb=function(){ic.textContent='';ic.style.background=tileColor(a.name||'?');ic.appendChild(el('span',null,(a.name||'?').trim().charAt(0).toUpperCase()))};
+      if(a.icon){var im=new Image();im.alt='';im.onerror=fb;im.src='../'+a.icon.replace(/^\/+/,'');ic.appendChild(im)}else fb();
+      k.appendChild(ic);var x=el('div'),n=el('div','cname');n.appendChild(el('span',null,a.name));if(a['new'])n.appendChild(el('span','new','New'));
+      x.appendChild(n);x.appendChild(el('p','cdesc',a.description));k.appendChild(x);g.appendChild(k)});s.appendChild(g)}
+    else s.appendChild(el('p','empty','New apps are on the way.'));
+    p.appendChild(s)});
+}
+
+/* ---------- wiring ---------- */
+$('sName').addEventListener('input',function(){D.settings.name=this.value;mark()});
+$('sTag').addEventListener('input',function(){D.settings.tagline=this.value;mark()});
+$('sYt').addEventListener('input',function(){D.settings.youtube=this.value.trim();mark()});
+$('addCat').addEventListener('click',function(){var id=uniq('category',D.categories.map(function(c){return c.id}));D.categories.push({id:id,name:'New category',subtitle:'',accent:'violet',apps:[]});openCats[id]=true;mark();build();toast('Category added at the bottom')});
+$('dl').addEventListener('click',function(){
+  var bad=[];D.categories.forEach(function(c){if(!c.name.trim())bad.push('A category has no name');c.apps.forEach(function(a){if(!a.name.trim())bad.push('An app in “'+c.name+'” has no name');if(!a.path.trim())bad.push('“'+(a.name||'unnamed')+'” has no folder / link')})});
+  if(bad.length&&!confirm('Some things look unfinished:\n\n• '+bad.slice(0,6).join('\n• ')+'\n\nDownload anyway?'))return;
+  /* make ids tidy and unique */
+  var seenC=[],seenA=[];D.categories.forEach(function(c){c.id=uniq(slug(c.name)||'category',seenC);seenC.push(c.id);c.apps.forEach(function(a){a.id=uniq(slug(a.name)||'app',seenA);seenA.push(a.id)})});
+  var blob=new Blob([JSON.stringify(D,null,2)+'\n'],{type:'application/json'});
+  var u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download='apps.json';document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u)},1000);
+  dirty=false;$('status').textContent='Downloaded — now upload apps.json to GitHub';$('status').className='status';toast('apps.json downloaded');
+});
+$('openFile').addEventListener('click',function(){$('file').click()});
+$('file').addEventListener('change',function(){var f=this.files[0];if(!f)return;var r=new FileReader();r.onload=function(){try{load(JSON.parse(r.result),'Opened '+f.name)}catch(e){toast('That file is not a valid apps.json')}};r.readAsText(f);this.value=''});
+$('how').addEventListener('click',function(){var d=$('dlg');if(d.showModal)d.showModal();else alert('Download the list, then upload apps.json to your GitHub apps repository (Add file → Upload files) and commit.')});
+$('dlgClose').addEventListener('click',function(){$('dlg').close()});
+window.addEventListener('beforeunload',function(e){if(dirty){e.preventDefault();e.returnValue=''}});
+
+fetch('../apps.json',{cache:'no-cache'}).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(d){
+  var dr=lsGet(DRAFT);load(d,'Loaded live list');
+  if(dr&&dr!==JSON.stringify(D)&&confirm('An unfinished draft from an earlier session was found on this device. Restore it?')){try{load(JSON.parse(dr),'Draft restored');dirty=true;$('status').textContent='Draft restored — press Download list when done';$('status').className='status dirty'}catch(e){}}
+}).catch(function(){var dr=lsGet(DRAFT),d=null;try{d=dr&&JSON.parse(dr)}catch(e){}
+  load(d||null,d?'Draft restored':'Could not load the live list — use “Open apps.json…”');});
+})();
+</script>
+</body>
+</html>

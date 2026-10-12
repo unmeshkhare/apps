@@ -1,0 +1,46 @@
+{
+  "settings": {
+    "name": "Graviton Apps",
+    "tagline": "Free tools and simulations for students and curious minds.",
+    "youtube": "https://www.youtube.com/@Curism"
+  },
+  "categories": [
+    {
+      "id": "mathematics",
+      "name": "Mathematics",
+      "subtitle": "Numbers, shapes and the patterns between them",
+      "accent": "violet",
+      "apps": [
+        {
+          "id": "stillpoint",
+          "name": "Stillpoint",
+          "description": "A calm place to explore and play with mathematics.",
+          "path": "stillpoint/",
+          "icon": "stillpoint/icon.png",
+          "new": true
+        }
+      ]
+    },
+    {
+      "id": "physics",
+      "name": "Physics",
+      "subtitle": "Motion, energy, waves and fields",
+      "accent": "teal",
+      "apps": []
+    },
+    {
+      "id": "engineering",
+      "name": "Engineering",
+      "subtitle": "How things are designed, built and measured",
+      "accent": "gold",
+      "apps": []
+    },
+    {
+      "id": "curiosity",
+      "name": "Curiosity",
+      "subtitle": "General science and things worth wondering about",
+      "accent": "rose",
+      "apps": []
+    }
+  ]
+}
